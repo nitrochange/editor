@@ -45,4 +45,27 @@ class PathTests {
         val node = Node(isNodeAt = true, mutableListOf("circle", "draw"), Point(0,2))
         Assert.assertEquals(expectedSimpleResult2, node.print())
     }
+
+    @Test
+    fun namingNodeForPetriNetsSimpleTest() {
+        val node = Node(
+            isNodeAt = true,
+            params = mutableListOf("place"),
+            startPoint = Point(0, 2),
+            name = "waiting 1"
+        )
+        Assert.assertEquals("\\node (waiting 1) at ( 0,2) [place] {};", node.print())
+    }
+
+    @Test
+    fun liberalSyntaxWithNamingNodeForPetriNetsSimpleTest() {
+        val node = Node(
+            isNodeAt = true,
+            params = mutableListOf("place"),
+            startPoint = Point(0,2),
+            name = "waiting 1",
+            liberalSyntax = true
+        )
+        Assert.assertEquals("\\node[place] (waiting 1) at ( 0,2) {};", node.print())
+    }
 }
