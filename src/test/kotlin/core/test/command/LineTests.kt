@@ -1,6 +1,7 @@
 package core.test.command
 
 import com.core.tikz.commands.Line
+import com.core.tikz.commands.LineConnectingNodes
 import com.core.tikz.figures.Arrow
 import com.core.tikz.node.LineWithText
 import com.core.tikz.node.Node
@@ -63,6 +64,18 @@ class LineTests {
         Assert.assertEquals("\\draw (0.5,0.5) node [fill=yellow!80!black]" +
                 "{Text at \\verb!node 1!} " +
                 "-- (1.5,1.5) node {Text at \\verb!node 2!};", line.toTex())
+    }
+
+    @Test
+    fun simpleLineConnectingNodesTest() {
+        val line = LineConnectingNodes("enter critical.east", "critical.west", "->")
+        Assert.assertEquals("\\draw [->] (enter critical.east) -- (critical.west);", line.toTex())
+    }
+
+    @Test
+    fun simpleEnhancedLineConnectingNodesTest() {
+        val line = LineConnectingNodes("enter critical", "semaphore", "->",mutableListOf("bend right=45"))
+        Assert.assertEquals("\\draw [->] (enter critical) to [bend right=45] (semaphore);", line.toTex())
     }
 
 }

@@ -1,5 +1,6 @@
 import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Ignore
 import org.junit.Test
 import java.math.BigInteger
 
@@ -37,6 +38,7 @@ class TestClass {
         testing(easyLine(13), BigInteger("10400600"))
 
     }
+    @Ignore
     @Test
     fun basicTests1() {
         assertEquals(listOf("AbCdEf", "aBcDeF"), capitalize("abcdef"))
