@@ -1,7 +1,9 @@
 package core.test.command.`petri-net`
 
+import com.core.tikz.node.EdgedNode
 import com.core.tikz.node.LabelledNode
 import com.core.tikz.node.Node
+import com.core.tikz.util.Edge
 import com.core.tikz.util.Path
 import com.core.tikz.util.Point
 import org.junit.Assert
@@ -90,5 +92,33 @@ class PathTests {
     fun simpleAddingLabelsNextToNodesTest() {
         val labeledNode = LabelledNode("{\$s\\le 3\$}", mutableListOf("red", "above"),"semaphore.north")
         Assert.assertEquals("\\node [red,above] at (semaphore.north) {\$s\\le 3\$};", labeledNode.print())
+    }
+
+    @Test
+    fun simpleEdgedNodeTest() {
+        val edges = mutableListOf<Edge>(
+            Edge(mutableListOf("->"),"critical"),
+            Edge(mutableListOf("<-","bend left=45"), "waiting"),
+            Edge(mutableListOf("->", "bend right=45",),"semaphore"))
+        val edgedNode = EdgedNode("transition","enter critical", mutableListOf("left=of critical"), edges)
+
+        Assert.assertEquals("\\node[transition] (enter critical) [left=of critical] {}\n" +
+                "edge [->] (critical)\n" +
+                "edge [<-,bend left=45] (waiting)\n" +
+                "edge [->,bend right=45] (semaphore);", edgedNode.print())
+    }
+
+    @Test
+    fun complexEdgedNodeTest() {
+        val edges = mutableListOf(
+            Edge(mutableListOf("pre"),"critical", "class=\"textcolor\" style=\"color:#800080\" >"),
+            Edge(mutableListOf("post","bend right"), "waiting","node[auto,swap] {2} "),
+            Edge(mutableListOf("pre", "bend left",),"semaphore"))
+        val edgedNode = EdgedNode("transition","leave critical", mutableListOf("right=of critical"), edges)
+
+        Assert.assertEquals("\\node[transition] (leave critical) [right=of critical] {}\n" +
+                "edge [pre] class=\"textcolor\" style=\"color:#800080\" >(critical)\n" +
+                "edge [post,bend right] node[auto,swap] {2} (waiting)\n" +
+                "edge [pre,bend left] (semaphore);", edgedNode.print())
     }
 }

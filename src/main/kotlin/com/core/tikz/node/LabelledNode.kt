@@ -2,8 +2,8 @@ package com.core.tikz.node
 
 class LabelledNode(params: MutableList<String>, text: String): Node(params, text){
 
-    private var label: String = ""
-    private var innerName: String = ""
+    protected var label: String = ""
+    protected override var innerName: String = ""
 
     constructor(
         label: String = "",

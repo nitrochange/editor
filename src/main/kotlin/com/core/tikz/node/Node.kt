@@ -10,9 +10,9 @@ open class Node(var params: MutableList<String>, var text: String) {
     private val node = " node "
     private var isNodeAt = false
     private var startPoint: Point = Point(0,0)
-    private var innerName: String = ""
+    protected open var innerName: String = ""
     private var liberalSyntax = false
-    private var styleName: String = ""
+    protected open var styleName: String = ""
 
     constructor(
         nodeInPath: Boolean = false,
@@ -44,6 +44,7 @@ open class Node(var params: MutableList<String>, var text: String) {
         this.innerName = name
         this.liberalSyntax = liberalSyntax
     }
+
     constructor(
         styleName: String ="",
         innerName: String = "",
