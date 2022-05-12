@@ -1,5 +1,6 @@
 package core.test.command.`petri-net`
 
+import com.core.tikz.node.LabelledNode
 import com.core.tikz.node.Node
 import com.core.tikz.util.Path
 import com.core.tikz.util.Point
@@ -67,5 +68,27 @@ class PathTests {
             liberalSyntax = true
         )
         Assert.assertEquals("\\node[place] (waiting 1) at ( 0,2) {};", node.print())
+    }
+    //relative placement
+    @Test
+    fun simpleRelativePlacementBehaviourNodeTest() {
+        val node1 = Node(
+            styleName = "place",
+            innerName = "waiting"
+        )
+        val node2 = Node(
+            styleName = "transition",
+            innerName = "leave critical",
+            params = mutableListOf("right=of critical")
+        )
+
+        Assert.assertEquals("\\node[place] (waiting) {};", node1.printRelativePlacement())
+        Assert.assertEquals("\\node[transition] (leave critical) [right=of critical] {};", node2.printRelativePlacement())
+    }
+
+    @Test
+    fun simpleAddingLabelsNextToNodesTest() {
+        val labeledNode = LabelledNode("{\$s\\le 3\$}", mutableListOf("red", "above"),"semaphore.north")
+        Assert.assertEquals("\\node [red,above] at (semaphore.north) {\$s\\le 3\$};", labeledNode.print())
     }
 }

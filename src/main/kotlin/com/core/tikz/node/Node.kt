@@ -3,7 +3,7 @@ package com.core.tikz.node
 import com.core.tikz.util.Point
 
 
-class Node(var params: MutableList<String>, var text: String) {
+open class Node(var params: MutableList<String>, var text: String) {
 
     private var nodeInPath = false
     private var shift = 0
@@ -12,6 +12,7 @@ class Node(var params: MutableList<String>, var text: String) {
     private var startPoint: Point = Point(0,0)
     private var innerName: String = ""
     private var liberalSyntax = false
+    private var styleName: String = ""
 
     constructor(
         nodeInPath: Boolean = false,
@@ -43,8 +44,28 @@ class Node(var params: MutableList<String>, var text: String) {
         this.innerName = name
         this.liberalSyntax = liberalSyntax
     }
+    constructor(
+        styleName: String ="",
+        innerName: String = "",
+        params: MutableList<String> = mutableListOf()
+    ): this(params, "") {
+        this.innerName = innerName
+        this.styleName = styleName
+    }
 
-    fun print(): String {
+    private fun printRelativeArguments(): String {
+        if (params.isEmpty()) {
+            return ""
+        } else {
+            return params.joinToString(",", "[","]") + " "
+        }
+    }
+
+    fun printRelativePlacement(): String {
+        return "\\node[${styleName}] (${innerName}) ${printRelativeArguments()}{};"
+    }
+
+    open fun print(): String {
         if (innerName != "" && isNodeAt) {
             if (liberalSyntax) {
                 return "\\node${params.joinToString(",","[","]")} (${innerName}) at ( ${startPoint.x.toInt()},${startPoint.y.toInt()}) {};"

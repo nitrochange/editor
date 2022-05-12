@@ -65,11 +65,4 @@ class LineTests {
                 "-- (1.5,1.5) node {Text at \\verb!node 2!};", line.toTex())
     }
 
-    @Test
-    fun complexLineWithNodesTest() {
-
-//        Assert.assertEquals("\\foreach \\x/\\xtext in {-1, -0.5/-\\frac{1}{2}, 1}\n" +
-//                "\\draw (\\x cm,1pt) -- (\\x cm,-1pt) node[anchor=north] {\$\\xtext\$};\n", "")
-    }
-
 }
