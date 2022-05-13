@@ -1,4 +1,4 @@
-package core.test.command.demo
+package core.test.command.demo.tables
 
 import LeftCentering
 import RightCentering

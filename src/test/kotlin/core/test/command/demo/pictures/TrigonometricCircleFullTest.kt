@@ -1,4 +1,4 @@
-package core.test.command.demo
+package core.test.command.demo.pictures
 
 import com.core.environments.Scope
 import com.core.tikz.TikzPicture
@@ -13,7 +13,7 @@ import com.core.util.Colorlet
 import com.core.util.Foreach
 import org.junit.Test
 
-class FullPicturesTests {
+class TrigonometricCircleFullTest {
 
     val fullText = """
         

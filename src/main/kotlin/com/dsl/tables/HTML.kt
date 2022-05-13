@@ -36,11 +36,51 @@ class CenterCentering: TableCentering() { override fun toString() = "\\centering
 class Table(val allignment: String,
             var caption: TableCaption,
             var centering: TableCentering,
-            var environment: TabularEnvironment) {
+            var environment: TableEnvironment) {
     var rows: MutableList<String>
+    var utilCommands: MutableList<String> = mutableListOf()
     init {
         rows = mutableListOf("1 & 2 \\\\\n", "3 & 4")
     }
+    constructor():this("",TableCaption(""), LeftCentering(),TabularEnvironment()) {
+
+    }
+
+    fun caption(init: TableCaption.() -> Unit) {
+        val tableCaption = TableCaption()
+        tableCaption.init()
+        this.caption = tableCaption
+    }
+    fun hline(fake: () -> Unit) {
+        //todo апдейт utilCommands
+    }
+    fun headings(headings: () -> Unit ) {
+
+    }
+    fun boldfont(init: String.() -> Unit) {
+
+    }
+
+    fun endfirsthead(fake: () -> Unit) {
+
+    }
+    fun addcontinuelabel(init: (newPage: Boolean) -> Unit) {
+
+    }
+    fun addlabeldublications(fake: () -> Unit) {
+
+    }
+    fun content(init: () -> Unit) {
+
+    }
+    fun row(init: () -> Unit) {}
+    fun repeatcontent(init: () -> Unit) {
+
+    }
+    fun leftcentering(init: () -> Unit) {}
+    fun rightcentering(init: () -> Unit) {}
+    fun centering(init: () -> Unit) {}
+    fun wrappingtext(init: () -> Unit) {}
     fun render(builder: StringBuilder) {
         builder.append("\\begin{table}[${allignment}]")
         builder.append("\n")
@@ -81,6 +121,9 @@ class TabularEnvironment: TableEnvironment() {
     }
 
 }
+class Longtable1: TableEnvironment() {
+    override fun getName() = "longtable"
+}
 class TabularXEnvironment: TableEnvironment() {
     override fun getName(): String {
         return "tabularX"
@@ -104,7 +147,14 @@ fun text():TabularEnvironment.() -> Unit {
 fun text1():Table.() -> Unit {
     return {}
 }
+abstract class CommandWithText() {
+    private var text: String = ""
+    operator fun String.unaryPlus(){
+        text = ""
+    }
+}
 class TableCaption(val text: String) {
+    constructor(): this("")
     fun getCaption():String = "\\caption{$text}"
 }
 fun leftAllignment() {
@@ -128,27 +178,26 @@ fun here(): String = "!hbt"
 fun top(): String = "!h"
 fun bottom(): String = "b"
 fun allignment(func: () -> String): String = func()
-//val func: HTML.() -> String = {"some html generated"}
-//html { body() }
-//println(htmlToString(func))
-//println(generateTable (generateInner()))
+fun caption(): TableCaption {
+    return TableCaption("")
+}
 
-
-// table (
-// allignment {
-//      here()|bottom()|top()
-// }
-// leftcentering()
-// caption {
-//       +"caption text"
-// }
-//
-// tabular {
-//
-// }
-
-// )
-
+fun table(init: Table.() -> Unit): Table {
+    val table = Table()
+    table.init()
+    return table
+}
+fun longtable(init: Table.() -> Unit): Table {
+    val longTable = Table()
+    longTable.init()
+    return longTable
+}
+fun wraptable(init: Table.() -> Unit): Table {
+    val wraptable = Table()
+    wraptable.init()
+    return wraptable
+}
+fun settings(init: () -> Unit) {}
 
 
 fun main() {
@@ -156,9 +205,9 @@ fun main() {
         allignment {
             here()
         },
-        centering = LeftCentering(),
-        caption = TableCaption("Caption text"),
-        environment = TabularEnvironment()
+        LeftCentering(),
+        TableCaption("Caption text"),
+        TabularEnvironment()
     ) {
 
     }
