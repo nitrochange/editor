@@ -17,16 +17,4 @@ class CurvedLineTests {
 
         Assert.assertEquals("\\draw (0.0,0.0) .. controls (2.0,2.0) and (4.0,2.0) .. (6.0,0.0);", curvedLine.toTex())
     }
-
-    @Ignore
-    @Test
-    fun simpleCurvedLineTest2() {
-
-    }
-
-    @Ignore
-    @Test
-    fun simpleCurvedLineTestNegative() {
-
-    }
 }

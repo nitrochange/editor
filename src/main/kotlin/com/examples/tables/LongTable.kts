@@ -14,7 +14,6 @@ val table = longtable {
     addcontinuelabel { newPage -> true }
     content {
         row {
-
         }
         row {
 

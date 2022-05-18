@@ -69,7 +69,7 @@ class LineTests {
     @Test
     fun simpleLineConnectingNodesTest() {
         val line = LineConnectingNodes("enter critical.east", "critical.west", "->")
-        Assert.assertEquals("\\draw [->] (enter critical.east) -- (critical.west);", line.toTex())
+        Assert.assertEquals("\\draw [->] (enter critical.east)  --  (critical.west);", line.toTex())
     }
 
     @Test

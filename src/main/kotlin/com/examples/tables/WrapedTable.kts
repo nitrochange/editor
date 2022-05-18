@@ -1,5 +1,9 @@
 val wraptable = wraptable {
-    rightcentering {}
+    rightcentering {
+        rightcentering {
+
+        }
+    }
     caption {  }
     content {
         hline {  }

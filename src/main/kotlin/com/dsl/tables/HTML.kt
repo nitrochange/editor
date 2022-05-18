@@ -1,3 +1,6 @@
+import com.core.util.CellDSLMarker
+import com.core.util.CenteringDSLMarker
+
 class HTML {
     fun body(): Unit {}
 }
@@ -29,8 +32,11 @@ fun generateInner(): () -> String = {
 abstract class TableCentering {
     abstract override fun toString(): String
 }
+@CenteringDSLMarker
 class LeftCentering: TableCentering() { override fun toString() = "\\flushleft"}
+@CenteringDSLMarker
 class RightCentering: TableCentering() { override fun toString() = "\\flushright"}
+@CenteringDSLMarker
 class CenterCentering: TableCentering() { override fun toString() = "\\centering"}
 
 class Table(val allignment: String,
@@ -73,13 +79,14 @@ class Table(val allignment: String,
     fun content(init: () -> Unit) {
 
     }
+    @CellDSLMarker
     fun row(init: () -> Unit) {}
     fun repeatcontent(init: () -> Unit) {
 
     }
-    fun leftcentering(init: () -> Unit) {}
-    fun rightcentering(init: () -> Unit) {}
-    fun centering(init: () -> Unit) {}
+    fun leftcentering(init: LeftCentering.() -> Unit) {}
+    fun rightcentering(init: RightCentering.() -> Unit) {}
+    fun centering(init: CenterCentering.() -> Unit) {}
     fun wrappingtext(init: () -> Unit) {}
     fun render(builder: StringBuilder) {
         builder.append("\\begin{table}[${allignment}]")
@@ -98,6 +105,9 @@ class Table(val allignment: String,
 //        builder.append(environment.getEnd())
         builder.append("\n")
         builder.append("\\end{table}")
+    }
+    fun test_example_func(init: Table.() -> Unit) {
+        //here we add some behaviour
     }
 
     fun toTex(): String {
@@ -124,11 +134,13 @@ class TabularEnvironment: TableEnvironment() {
 class Longtable1: TableEnvironment() {
     override fun getName() = "longtable"
 }
+@CellDSLMarker
 class TabularXEnvironment: TableEnvironment() {
     override fun getName(): String {
         return "tabularX"
     }
 }
+@CellDSLMarker
 class WrapTableEnvironment: TableEnvironment() {
     override fun getName(): String {
         return "wraptable"
