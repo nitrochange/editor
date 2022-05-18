@@ -2,6 +2,11 @@ package com.core.tikz
 
 import com.core.tikz.commands.Command
 
+/**
+ * @param commands - inner commands
+ * @param scale - this param can reduce or increase picture size in general
+ * @param params - params for configuring picture in a while
+ */
 class TikzPicture(
     var commands: MutableList<Command>,
     var scale: Int? = null,
