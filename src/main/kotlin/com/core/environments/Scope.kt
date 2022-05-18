@@ -2,6 +2,10 @@ package com.core.environments
 
 import com.core.tikz.commands.Command
 
+/**
+ * @param commands - list of commands, that scope will contain
+ * @param scopeParams - some string params, that can configure scope
+ */
 class Scope(var commands: MutableList<Command>, var scopeParams: MutableList<String>? = null) : Environment, Command(params = mutableListOf()) {
 
     override fun getTexCode(): String {
